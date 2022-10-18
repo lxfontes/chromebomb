@@ -1,0 +1,38 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <pre id="log"></pre>
+    <script>
+      var tabs = [];
+
+      function log(msg) {
+        const ll = document.getElementById('log');
+        ll.append(msg + "\n");
+      }
+
+      function open_tab() {
+        return window.open("bot.html");
+      }
+
+      function check() {
+        for (var i = 0; i < tabs.length; i++) {
+          if (tabs[i].done === true) {
+            log("tab " + i + " is done with " + tabs[i].requests + " requests. Relaunching.");
+            tabs[i].window.blast();
+          }
+        }
+
+        return true;
+      }
+
+      window.onload = function() {
+        for (var i = 0; i < 2; i++) {
+          tabs[i] = open_tab();
+        }
+
+        setInterval(check, 500);
+      }
+    </script>
+  </body>
+</html>

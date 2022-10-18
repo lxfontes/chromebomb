@@ -1,0 +1,50 @@
+<html>
+  <head>
+  </head>
+  <body>
+<script>
+  var xhr = [];
+  var timer;
+  var url = "https://www.instacart.com/";
+  var request_count = 2;
+
+  function check() {
+    if (window.requests == request_count) {
+      window.done = true;
+      clearInterval(timer);
+    }
+  }
+
+
+  function blast() {
+    xhr = [];
+    window.requests = 0;
+    window.done = false;
+    
+    console.log("Blasting");
+    for(i = 0; i < request_count; i++){
+      (function(i){
+        console.log('Request ' + i);
+        xhr[i] = new XMLHttpRequest();
+        xhr[i].open("GET", url, true);
+        xhr[i].onreadystatechange = function(){
+          if (xhr[i].readyState === XMLHttpRequest.DONE){
+            console.log('Response from request ' + i + ' [ ' + xhr[i].statusText + ']'); 
+            window.requests++;
+          }
+        };
+        xhr[i].send();
+      })(i);
+    }
+
+    timer = setInterval(check, 500);
+  }
+
+  window.onload = function(){
+    window._reload = function() { window.location.reload() }
+    window.blast = blast;
+    blast();
+  };
+</script>
+  </body>
+</html>
