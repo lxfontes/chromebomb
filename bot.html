@@ -6,6 +6,7 @@
   var xhr = [];
   var timer;
   var url = "https://www.instacart.com/";
+  url = "https://postman-echo.com/get";
   var request_count = 2;
 
   function check() {
@@ -27,9 +28,11 @@
         console.log('Request ' + i);
         xhr[i] = new XMLHttpRequest();
         xhr[i].open("GET", url, true);
+        xhr[i].setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr[i].onreadystatechange = function(){
           if (xhr[i].readyState === XMLHttpRequest.DONE){
             console.log('Response from request ' + i + ' [ ' + xhr[i].statusText + ']'); 
+            console.log(xhr[i].responseText);
             window.requests++;
           }
         };
